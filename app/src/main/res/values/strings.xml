@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CS 408 Lab1B Rock Paper Scissors</string>
+    <string name="welcome">Welcome to Rock-Paper-Scissors! \n Please choose your weapon:</string>
+    <string name="rock">ROCK</string>
+    <string name="paper">PAPER</string>
+    <string name="scissors">SCISSORS</string>
 </resources>
