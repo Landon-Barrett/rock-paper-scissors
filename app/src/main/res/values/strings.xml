@@ -1,7 +1,21 @@
 <resources>
     <string name="app_name">CS 408 Lab1B Rock Paper Scissors</string>
     <string name="welcome">Welcome to Rock-Paper-Scissors! \n Please choose your weapon:</string>
-    <string name="rock">ROCK</string>
-    <string name="paper">PAPER</string>
-    <string name="scissors">SCISSORS</string>
+    <string name="rock_button">ROCK</string>
+    <string name="paper_button">PAPER</string>
+    <string name="scissors_button">SCISSORS</string>
+    <string name="player_id">Player: </string>
+    <string name="computer_id">Computer: </string>
+    <string name="rock">Rock</string>
+    <string name="paper">Paper</string>
+    <string name="scissors">Scissors</string>
+    <string name="player_weapon">Player\'s Weapon: </string>
+    <string name="computer_weapon">Computer\'s Weapon: </string>
+    <string name="player_win">Player Wins: </string>
+    <string name="computer_win">Computer Wins: </string>
+    <string name="tie">It\'s a tie!</string>
+    <string name="rock_win_message">Rock crushes scissors!</string>
+    <string name="scissor_win_message">Scissors cut paper!</string>
+    <string name="paper_win_message">Paper covers rock!</string>
+
 </resources>

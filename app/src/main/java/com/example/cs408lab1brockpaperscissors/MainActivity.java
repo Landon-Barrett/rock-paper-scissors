@@ -15,15 +15,9 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private Weapon playerWeapon;
     private Weapon computerWeapon;
-    private int playerScore;
+    private int playerScore = 0;
     private int computerScore = 0;
-    private boolean playerWins = false;
-    private boolean computerWins = false;
-    private Random rand = new Random();
-    private int randInt;
-    private String winMessage;
-    private String score;
-    private StringBuilder s;
+    private String winMessage = " ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,44 +32,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 playerWeapon = Weapon.ROCK;
-                randInt = rand.nextInt(Weapon.values().length);
-                computerWeapon = Weapon.values()[randInt];
-
-                if(computerWeapon.equals(Weapon.SCISSORS)) {
-                    playerScore += 1;
-                    playerWins = true;
-                    computerWins = false;
-                    winMessage = "Rock crushes scissors!";
-
-                }
-                else if(computerWeapon.equals(Weapon.PAPER)) {
-                    computerScore += 1;
-                    computerWins = true;
-                    playerWins = false;
-                    winMessage = "Paper covers rock!";
-                }
-                else {
-                    computerWins = false;
-                    playerWins = false;
-                    winMessage = "It's a tie!";
-                }
-
-                if(playerWins){
-                    winMessage = ("Player wins: " + winMessage);
-                }
-                else if(computerWins){
-                    winMessage = ("Computer wins: " + winMessage);
-                }
-
-                score = ("Player: " + playerScore + ", Computer: " + computerScore);
-                s = new StringBuilder();
-                s.append("Player: ").append(playerScore).append(", Computer: ").append(computerScore)
-                        .append("\n").append("Player's Weapon: ").append(playerWeapon.toString())
-                        .append("\n").append("Computer's Weapon: ").append(computerWeapon.toString())
-                        .append("\n").append(winMessage);
-                TextView t = binding.output;
-                t.setText(s.toString());
-
+                runGame(playerWeapon);
             }
         });
 
@@ -83,40 +40,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 playerWeapon = Weapon.PAPER;
-                randInt = rand.nextInt(Weapon.values().length);
-                computerWeapon = Weapon.values()[randInt];
-
-                if(computerWeapon.equals(Weapon.ROCK)) {
-                    playerScore += 1;
-                    playerWins = true;
-                    computerWins = false;
-                    winMessage = "Paper covers rock!";
-                }
-                else if (computerWeapon.equals(Weapon.SCISSORS)) {
-                    computerScore += 1;
-                    computerWins = true;
-                    playerWins = false;
-                    winMessage = "Scissors cut paper!";
-                }
-                else {
-                    computerWins = false;
-                    playerWins = false;
-                    winMessage = "It's a tie!";
-
-                }
-                if(playerWins){
-                    winMessage = ("Player wins: " + winMessage);
-                }
-                else if(computerWins){
-                    winMessage = ("Computer wins: " + winMessage);
-                }
-                s = new StringBuilder();
-                s.append("Player: ").append(playerScore).append(", Computer: ").append(computerScore)
-                        .append("\n").append("Player's Weapon: ").append(playerWeapon.toString())
-                        .append("\n").append("Computer's Weapon: ").append(computerWeapon.toString())
-                        .append("\n").append(winMessage);
-                TextView t = binding.output;
-                t.setText(s.toString());
+                runGame(playerWeapon);
             }
         });
 
@@ -124,42 +48,118 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 playerWeapon = Weapon.SCISSORS;
-                randInt = rand.nextInt(Weapon.values().length);
-                computerWeapon = Weapon.values()[randInt];
-
-                if(computerWeapon.equals(Weapon.PAPER)) {
-                    playerScore += 1;
-                    playerWins = true;
-                    computerWins = false;
-                    winMessage = "Scissors cut paper!";
-                }
-                else if(computerWeapon.equals(Weapon.ROCK)) {
-                    computerScore += 1;
-                    computerWins = true;
-                    playerWins = false;
-                    winMessage = "Rock crushes scissors!";
-                }
-                else {
-                    computerWins = false;
-                    playerWins = false;
-                    winMessage = "It's a tie!";
-                }
-                if(playerWins){
-                    winMessage = ("Player wins: " + winMessage);
-                }
-                else if(computerWins){
-                    winMessage = ("Computer wins: " + winMessage);
-                }
-                s = new StringBuilder();
-                s.append("Player: ").append(playerScore).append(", Computer: ").append(computerScore)
-                        .append("\n").append("Player's Weapon: ").append(playerWeapon.toString())
-                        .append("\n").append("Computer's Weapon: ").append(computerWeapon.toString())
-                        .append("\n").append(winMessage);
-                TextView t = binding.output;
-                t.setText(s.toString());
+                runGame(playerWeapon);
             }
         });
 
+    }
+
+    public void runGame(Weapon playerWeapon) {
+
+        String playerWeaponString = " ";
+        String computerWeaponString = " ";
+        String playerWins = getResources().getString(R.string.player_win);
+        String computerWins = getResources().getString(R.string.computer_win);
+
+        Random rand = new Random();
+        int randInt = rand.nextInt(Weapon.values().length);
+        Weapon computerWeapon = Weapon.values()[randInt];
+
+        if((playerWeapon.equals(Weapon.ROCK)) && (computerWeapon.equals(Weapon.SCISSORS))) {
+
+            playerWeaponString = getPlayerWeaponResource(playerWeapon);
+            computerWeaponString = getComputerWeaponResource(computerWeapon);
+            playerScore += 1;
+            winMessage = (playerWins + " " + getResources().getString(R.string.rock_win_message));
+        }
+
+        else if((playerWeapon.equals(Weapon.SCISSORS)) && (computerWeapon.equals(Weapon.ROCK))) {
+
+            playerWeaponString = getPlayerWeaponResource(playerWeapon);
+            computerWeaponString = getComputerWeaponResource(computerWeapon);
+            computerScore += 1;
+            winMessage = (computerWins + " " + getResources().getString(R.string.rock_win_message));
+        }
+        else if((playerWeapon.equals(Weapon.PAPER)) && (computerWeapon.equals(Weapon.ROCK))) {
+
+            playerWeaponString = getPlayerWeaponResource(playerWeapon);
+            computerWeaponString = getComputerWeaponResource(computerWeapon);
+            playerScore +=1;
+            winMessage = (playerWins + " " + getResources().getString(R.string.paper_win_message));
+        }
+        else if((playerWeapon.equals(Weapon.ROCK)) && (computerWeapon.equals(Weapon.PAPER))) {
+
+            playerWeaponString = getPlayerWeaponResource(playerWeapon);
+            computerWeaponString = getComputerWeaponResource(computerWeapon);
+            computerScore += 1;
+            winMessage = (computerWins + " " + getResources().getString(R.string.paper_win_message));
+        }
+        else if((playerWeapon.equals(Weapon.SCISSORS)) && (computerWeapon.equals(Weapon.PAPER))) {
+
+            playerWeaponString = getPlayerWeaponResource(playerWeapon);
+            computerWeaponString = getComputerWeaponResource(computerWeapon);
+            playerScore += 1;
+            winMessage = (playerWins + " " + getResources().getString(R.string.scissor_win_message));
+        }
+        else if((playerWeapon.equals(Weapon.PAPER)) && (computerWeapon.equals(Weapon.SCISSORS))) {
+
+            playerWeaponString = getPlayerWeaponResource(playerWeapon);
+            computerWeaponString = getComputerWeaponResource(computerWeapon);
+            computerScore += 1;
+            winMessage = (computerWins + " " + getResources().getString(R.string.scissor_win_message));
+        }
+        else if(playerWeapon.equals(computerWeapon)){
+
+            playerWeaponString = getPlayerWeaponResource(playerWeapon);
+            computerWeaponString = getComputerWeaponResource(computerWeapon);
+            winMessage = getResources().getString(R.string.tie);
+        }
+
+        StringBuilder s = new StringBuilder();
+        s.append(getResources().getString(R.string.player_id)).append(" ").append(playerScore).append(" ")
+                .append(getResources().getString(R.string.computer_id)).append(" ").append(computerScore)
+                .append("\n")
+                .append(getResources().getString(R.string.player_weapon)).append(" ").append(playerWeaponString)
+                .append("\n")
+                .append(getResources().getString(R.string.computer_weapon)).append(" ").append(computerWeaponString)
+                .append("\n").append(winMessage);
+
+        TextView t = binding.output;
+        t.setText(s.toString());
+
+    }
+    public String getPlayerWeaponResource(Weapon p) {
+
+        String playerWeaponString = " ";
+
+        if(p.equals(Weapon.ROCK)) {
+            playerWeaponString = getResources().getString(R.string.rock);
+        }
+        else if(p.equals(Weapon.PAPER)) {
+            playerWeaponString = getResources().getString(R.string.paper);
+        }
+        else if(p.equals(Weapon.SCISSORS)) {
+            playerWeaponString = getResources().getString(R.string.scissors);
+        }
+
+        return playerWeaponString;
+    }
+
+    public String getComputerWeaponResource(Weapon c) {
+
+        String computerWeaponString = " ";
+
+        if(c.equals(Weapon.ROCK)) {
+            computerWeaponString = getResources().getString(R.string.rock);
+        }
+        else if(c.equals(Weapon.PAPER)) {
+            computerWeaponString = getResources().getString(R.string.paper);
+        }
+        else if(c.equals(Weapon.SCISSORS)) {
+            computerWeaponString = getResources().getString(R.string.scissors);
+        }
+
+        return computerWeaponString;
     }
 
 }
